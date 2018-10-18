@@ -6,6 +6,8 @@ set(SOURCE_FILES main.cpp include/Transfer.h src/Transfer.cpp include/helpers.h)
 
 include_directories(include)
 
+set(Boost_USE_STATIC_LIBS ON)
+
 find_package(Boost 1.68.0 COMPONENTS system filesystem REQUIRED)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
