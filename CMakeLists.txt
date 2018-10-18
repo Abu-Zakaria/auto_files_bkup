@@ -8,7 +8,7 @@ set(SOURCE_FILES
         src/ConfigReader.hpp
         src/Reader.hpp
         src/Transfer.cpp
-        lib/helpers.hpp
+        src/helpers.hpp
         src/ConfigReader.cpp
         )
 
