@@ -2,7 +2,15 @@ cmake_minimum_required(VERSION 3.5)
 project(auto_files_bkup)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(SOURCE_FILES src/main.cpp include/Transfer.hpp lib/Transfer.cpp lib/helpers.hpp include/ConfigReader.hpp lib/ConfigReader.cpp include/Reader.hpp)
+set(SOURCE_FILES
+        src/main.cpp
+        include/Transfer.hpp
+        include/ConfigReader.hpp
+        include/Reader.hpp
+        lib/Transfer.cpp
+        lib/helpers.hpp
+        lib/ConfigReader.cpp
+        )
 
 include_directories(include)
 
