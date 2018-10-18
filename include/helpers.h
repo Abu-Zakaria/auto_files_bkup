@@ -1,5 +1,9 @@
 #pragma once
 
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+
+#include <iostream>
 #include <string>
 #include <vector>
 #include <unistd.h>
