@@ -1,4 +1,8 @@
 echo "Installing..."
 cp ./auto_files_bkup /usr/bin
 
-echo "Installation completed!"
+if [ $? -eq 0 ]; then
+    echo "Installation completed!"
+else
+    echo "Installation failed!"
+fi
