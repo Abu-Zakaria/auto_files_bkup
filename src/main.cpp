@@ -1,7 +1,7 @@
 #include <iostream>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#include "helpers.hpp"
+#include "../lib/helpers.hpp"
 #include "Transfer.hpp"
 #include <sstream>
 
