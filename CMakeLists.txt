@@ -4,12 +4,12 @@ project(auto_files_bkup)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(SOURCE_FILES
         src/main.cpp
-        include/Transfer.hpp
-        include/ConfigReader.hpp
-        include/Reader.hpp
-        lib/Transfer.cpp
+        src/Transfer.hpp
+        src/ConfigReader.hpp
+        src/Reader.hpp
+        src/Transfer.cpp
         lib/helpers.hpp
-        lib/ConfigReader.cpp
+        src/ConfigReader.cpp
         )
 
 include_directories(include)

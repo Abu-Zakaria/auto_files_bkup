@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <boost/filesystem.hpp>
-#include "helpers.hpp"
+#include "../lib/helpers.hpp"
 #include <thread>
 #include <time.h>
 
