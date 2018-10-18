@@ -1,8 +1,8 @@
 #include <iostream>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#include "helpers.h"
-#include "Transfer.h"
+#include "helpers.hpp"
+#include "Transfer.hpp"
 #include <sstream>
 
 int main(int argc, char* argv[])

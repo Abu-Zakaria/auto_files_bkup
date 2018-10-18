@@ -1,6 +1,6 @@
-#include "ConfigReader.h"
+#include "ConfigReader.hpp"
 #include <fstream>
-#include <helpers.h>
+#include <helpers.hpp>
 #include <vector>
 
 ConfigReader::ConfigReader(std::string file_path)

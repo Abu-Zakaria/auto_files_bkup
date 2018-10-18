@@ -1,8 +1,8 @@
-#include "Transfer.h"
+#include "Transfer.hpp"
 #include <iostream>
 #include <fstream>
 #include <boost/filesystem.hpp>
-#include <helpers.h>
+#include <helpers.hpp>
 #include <thread>
 #include <time.h>
 

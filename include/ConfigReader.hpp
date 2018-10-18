@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <Reader.h>
+#include <Reader.hpp>
 #include <fstream>
 
 class ConfigReader : Reader
