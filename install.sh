@@ -1,0 +1,1 @@
+cp ./auto_files_bkup /usr/bin
