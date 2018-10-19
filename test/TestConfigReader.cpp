@@ -42,3 +42,17 @@ TEST_CASE("successfully adds a new configuration to config file", "[config_reade
 
     REQUIRE(config.get(key) == value);
 }
+
+TEST_CASE("updates a existing key's value", "[config_reader]")
+{
+    ConfigReader config("../auto_bkup_configs.txt");
+
+    std::string key = "test_set",
+                old_val = "old_val",
+                new_val = "new_val";
+
+    if(!config.exists(key))
+        config.add(key, old_val);
+    config.set(key, new_val);
+    REQUIRE(config.get(key) == new_val);
+}
