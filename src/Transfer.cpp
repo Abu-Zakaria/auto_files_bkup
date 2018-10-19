@@ -29,6 +29,18 @@ void Transfer::setTargetDir(std::string path)
 
 void Transfer::move()
 {
+    helpers::printl("+-----------------------------------+");
+    helpers::printl("| Starting auto-backup...           |");
+    helpers::printl("| --------------------------------- |");
+    helpers::print("| Delay : " + std::to_string(getDelay()) + " minute(s)");
+
+    for(int i = 0; i < 16 - std::to_string(getDelay()).length(); i++)
+    {
+        helpers::print(" ");
+    }
+    helpers::print("|\n");
+    helpers::printl("+-----------------------------------+");
+
     while(true)
     {
         delete_dir(target_dir);

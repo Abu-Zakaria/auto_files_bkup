@@ -45,6 +45,25 @@ namespace helpers
         return result;
     }
 
+    inline std::string implode(char delim, std::vector<std::string> elements)
+    {
+        std::string result;
+        std::string delim_str;
+        delim_str.push_back(delim);
+
+        size_t size = elements.size();
+        int counter = 0;
+
+        for (std::string element : elements)
+        {
+            result += element;
+            if((size - 1) > counter)
+                result += delim_str;
+        }
+
+        return result;
+    }
+
     inline std::string current_dir()
     {
         char CurrentPath[FILENAME_MAX];
@@ -74,12 +93,15 @@ namespace helpers
                         ;
                 return false;
             }
-            if(fs::exists(destination))
+            if(!fs::exists(destination))
             {
-                std::cerr << "Destination directory " << destination.string()
-                << " already exists." << '\n'
-                        ;
-                return false;
+                std::vector<std::string> destination_path_arr = explode('/', destination.string());
+
+                destination_path_arr.pop_back();
+                std::string before_destination_path = implode('/', destination_path_arr);
+
+                fs::create_directory(before_destination_path);
+
             }
             // Create the destination directory
             if(!fs::create_directory(destination))
@@ -131,10 +153,15 @@ namespace helpers
                 else
                 {
                     // Found file: Copy
-                    fs::copy_file(
-                            current,
-                            destination / current.filename()
-                    );
+                    std::string current_file_name = explode('/', current.string()).back();
+
+                    if(current_file_name != "auto_bkup_configs.txt")
+                    {
+                        fs::copy_file(
+                                current,
+                                destination / current.filename()
+                        );
+                    }
                 }
             }
             catch(fs::filesystem_error const & e)
