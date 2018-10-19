@@ -8,7 +8,7 @@ set(SOURCE_FILES main.cpp
         ../src/ConfigReader.hpp
         ../src/ConfigReader.cpp)
 
-include_directories(../lib/catch2)
+include_directories(lib/catch2)
 
 find_package(Boost 1.68.0 COMPONENTS system filesystem REQUIRED)
 
