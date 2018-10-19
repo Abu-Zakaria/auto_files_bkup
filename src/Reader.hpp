@@ -7,6 +7,8 @@ public:
     Reader(){};
     virtual ~Reader(){};
 
+    virtual bool loaded() = 0;
+
     virtual bool exists(std::string key) = 0;
 
     virtual std::string get(std::string key) = 0;

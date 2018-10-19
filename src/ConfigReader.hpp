@@ -12,6 +12,8 @@ public:
     ConfigReader(std::string file_path);
     ~ConfigReader();
 
+    bool loaded();
+
     bool exists(std::string key);
 
     std::string get(std::string key);

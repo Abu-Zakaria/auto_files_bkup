@@ -13,7 +13,17 @@ ConfigReader::~ConfigReader()
     file.close();
 }
 
+bool ConfigReader::loaded()
+{
+    return file.is_open();
+}
+
 bool ConfigReader::exists(std::string key)
+{
+    return !(get(key) == "");
+}
+
+std::string ConfigReader::get(std::string key)
 {
     std::string line;
     while(std::getline(file, line))
@@ -21,14 +31,11 @@ bool ConfigReader::exists(std::string key)
         std::vector<std::string> line_items = helpers::explode('=', line);
         if(line_items[0] == key)
         {
-            return true;
+            return line_items[1];
         }
     }
-    return false;
+    return "";
 }
-
-std::string ConfigReader::get(std::string key)
-{ }
 
 void ConfigReader::add(std::string key, std::string value)
 { }
