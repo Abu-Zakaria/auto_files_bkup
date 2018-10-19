@@ -35,7 +35,15 @@ void Transfer::move()
 
         boost::filesystem::path curr_dir(current_dir);
 
-        helpers::copyDir(curr_dir, boost::filesystem::path(target_dir));
+        if(!helpers::copyDir(curr_dir, boost::filesystem::path(target_dir)))
+        {
+            helpers::printl("+---------+");
+            helpers::printl("| Failed! |");
+            helpers::printl("+---------+");
+
+            break;
+        }
+
 
         time_t rawtime;
         struct tm * timeinfo;
@@ -47,7 +55,8 @@ void Transfer::move()
 
         strftime(formatted_time, 80, "%H:%M", timeinfo);
 
-        std::cout << "[" << formatted_time << "] - Backing up files to " << getTargetDir() << std::endl;
+        helpers::printl("");
+        std::cout << "\\|/ [" << formatted_time << "] - Backing up files to " << getTargetDir() << std::endl;
 
         std::this_thread::sleep_for(std::chrono::minutes(delay));
     }

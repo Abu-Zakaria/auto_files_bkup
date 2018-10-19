@@ -8,9 +8,22 @@
 #include <vector>
 #include <unistd.h>
 #include <sstream>
+#include <regex>
 
 namespace helpers
 {
+    template <typename T>
+    void print(T shit)
+    {
+        std::cout << shit;
+    }
+
+    template <typename T>
+    void printl(T shit)
+    {
+        std::cout << shit << std::endl;
+    }
+
     inline std::vector<std::string> explode(char delim, const std::string& s)
     {
         std::vector<std::string> result;
@@ -79,7 +92,18 @@ namespace helpers
         }
         catch(fs::filesystem_error const & e)
         {
-            std::cerr << e.what() << '\n';
+            const char * error_message = "boost::filesystem::create_directory: No such file or directory:";
+            if(strcmp(e.what(), error_message))
+            {
+                printl("+--------------------------------------------------------------------------------------------+");
+                printl("| The destination path doesn't exists. Edit your configuration file. (auto_bkup_configs.txt) |");
+                printl("+--------------------------------------------------------------------------------------------+");
+            }
+            else
+            {
+                std::cerr << e.what() << '\n';
+            }
+
             return false;
         }
         // Iterate through the source directory
@@ -119,18 +143,5 @@ namespace helpers
             }
         }
         return true;
-    }
-
-
-    template <typename T>
-    void print(T shit)
-    {
-        std::cout << shit;
-    }
-
-    template <typename T>
-    void printl(T shit)
-    {
-        std::cout << shit << std::endl;
     }
 }

@@ -3,33 +3,112 @@
 #include <boost/filesystem/operations.hpp>
 #include "helpers.hpp"
 #include "Transfer.hpp"
-#include <sstream>
+#include "ConfigReader.hpp"
+#include <regex>
 
 int main(int argc, char* argv[])
 {
-    if(argc < 2)
+    if(argc == 1)
     {
-        helpers::printl("DESTINATION was not found!");
-        helpers::printl("Please, provide a destination path where your current directory will be backed up!");
+        ConfigReader config("./auto_bkup_configs.txt");
 
-        return 0;
+        if(!config.exists("path") || !config.exists("delay"))
+        {
+            if(!config.exists("path"))
+                config.add("path", "~/your/destination");
+            if(!config.exists("delay"))
+                config.add("delay", "MINUTE");
+
+            helpers::printl("+-----------------------------------------------------------------------+");
+            helpers::printl("| Created a configuration file for auto backup! (auto_bkup_configs.txt) |");
+            helpers::printl("| Edit that file and run the command again for auto backups             |");
+            helpers::printl("+-----------------------------------------------------------------------+");
+
+            return 0;
+        }
+
+        helpers::printl("+----------------------------------------------------------+");
+        helpers::printl("| Using ./auto_bkup_configs.txt file for configuration...  |");
+        helpers::printl("+----------------------------------------------------------+");
+
+        try
+        {
+            if(config.get("path") == "" | stoi(config.get("delay")) < 1)
+            {
+                helpers::printl("");
+
+                helpers::printl("+--------------------------------------------+");
+                helpers::printl("| failed: The configuration file is invalid! |");
+                helpers::printl("+--------------------------------------------+");
+            }
+        }
+        catch(std::exception& e)
+        {
+            const char* stoi_error = "stoi";
+
+            if(strcmp(e.what(), stoi_error) == 0)
+            {
+                helpers::printl("");
+                helpers::printl("+------------------------------------------------------------------------+");
+                helpers::printl("| failed: Provide an integer value at 'delay' key in configuration file! |");
+                helpers::printl("+------------------------------------------------------------------------+");
+            }
+
+            return 0;
+        }
+
     }
-    else if(argc < 3)
+
+    if(argc == 2)
     {
-        helpers::printl("DELAY TIME was not found!");
-        helpers::printl("Please, provide a delay time of your backup!");
+        helpers::printl("");
+
+        helpers::printl("+----------------------------------------------+");
+        helpers::printl("| DELAY TIME was not found!                    |");
+        helpers::printl("| Please, provide a delay time of your backup! |");
+        helpers::printl("+----------------------------------------------+");
 
         return 0;
     }
 
     std::string target_dir;
 
+    unsigned int delay_time;
+
     std::string current_dir_name = helpers::current_dir();
 
-    target_dir = *(argv + 1);
-    int delay_time = std::atoi(*(argv + 2));
+    ConfigReader config("./auto_bkup_configs.txt");
+
+    if(argc == 3)
+    {
+        target_dir = *(argv + 1);
+
+        delay_time = (unsigned int)std::atoi(*(argv + 2));
+    }
+    else
+    {
+        target_dir = config.get("path");
+
+        delay_time = (unsigned int)std::stoi(config.get("delay"));
+    }
+
+
+    if(delay_time < 1)
+    {
+        helpers::printl("+----------------------------------------------+");
+        std::cerr <<    "| process failed: Invalid delay time!          |" << std::endl;
+        helpers::printl("+----------------------------------------------+");
+
+        return 0;
+    }
 
     target_dir = target_dir + "/" + current_dir_name;
+
+    std::string home_dir = std::getenv("HOME");
+
+    std::regex target_dir_regex("~");
+
+    target_dir = std::regex_replace(target_dir, target_dir_regex, home_dir);
 
     boost::filesystem::path full_path(boost::filesystem::current_path());
 
