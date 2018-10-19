@@ -14,6 +14,12 @@ namespace helpers
     inline std::vector<std::string> explode(char delim, const std::string& s)
     {
         std::vector<std::string> result;
+
+        if(s == "")
+        {
+            result.push_back("");
+            return result;
+        }
         std::istringstream iss(s);
 
         std::string token;
