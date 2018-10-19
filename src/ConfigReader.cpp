@@ -124,7 +124,7 @@ std::string ConfigReader::get(std::string key)
 
 void ConfigReader::add(std::string key, std::string value)
 {
-    open();
+    open("app");
     std::string line = "\n" + key + "=" + value;
 
     file << line;
