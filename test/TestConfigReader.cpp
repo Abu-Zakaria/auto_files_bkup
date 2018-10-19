@@ -56,3 +56,20 @@ TEST_CASE("updates a existing key's value", "[config_reader]")
     config.set(key, new_val);
     REQUIRE(config.get(key) == new_val);
 }
+
+TEST_CASE("deletes a key", "[config_reader]")
+{
+    ConfigReader config("../auto_bkup_configs.txt");
+
+    std::string key = "test_delete",
+                value = "test_value";
+
+    if(!config.exists(key))
+        config.add(key, value);
+    else
+        value = config.get(key);
+
+    REQUIRE(config.get(key) == value);
+    config.remove(key);
+    REQUIRE(config.get(key) == "");
+}
