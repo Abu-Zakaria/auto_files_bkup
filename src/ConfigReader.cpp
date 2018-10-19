@@ -18,6 +18,18 @@ bool ConfigReader::open()
     return file.is_open();
 }
 
+bool ConfigReader::open(std::string type)
+{
+    if(type == "in")
+        file.open(file_path, std::fstream::in);
+    else if(type == "out")
+        file.open(file_path, std::fstream::out);
+    else if(type == "app")
+        file.open(file_path, std::fstream::app);
+
+    return file.is_open();
+}
+
 void ConfigReader::close()
 {
     if(file.is_open())
@@ -69,7 +81,55 @@ void ConfigReader::add(std::string key, std::string value)
 }
 
 void ConfigReader::set(std::string key, std::string val)
-{ }
+{
+    if(exists(key))
+    {
+        open("in");
+        std::vector<std::string> lines;
+        std::string line;
+
+        while(std::getline(file, line))
+        {
+            lines.push_back(line);
+        }
+        close();
+
+        clear();
+
+        open("app");
+
+        for(std::string line : lines)
+        {
+            if(line == "")
+            {
+                file << "\n";
+
+                continue;
+            }
+
+            std::vector<std::string> items = helpers::explode('=', line);
+
+            if(items.at(0) == key)
+            {
+                items[1] = val;
+                std::cout << "setting" << std::endl;
+            }
+
+            file << items.at(0) << "=" << items.at(1) << "\n";
+        }
+
+        close();
+    }
+}
 
 void ConfigReader::remove(std::string key)
 { }
+
+void ConfigReader::clear()
+{
+    open("out");
+
+    file << "";
+
+    close();
+}
