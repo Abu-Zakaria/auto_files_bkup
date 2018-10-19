@@ -12,6 +12,58 @@ ConfigReader::~ConfigReader()
         close();
 }
 
+void ConfigReader::update(std::string type, std::string key, std::string val)
+{
+    if(exists(key))
+    {
+        open("in");
+        std::vector<std::string> lines;
+        std::string line;
+
+        while(std::getline(file, line))
+        {
+            lines.push_back(line);
+        }
+        close();
+
+        clear();
+
+        open("app");
+
+        for(std::string line : lines)
+        {
+            if(line == "")
+            {
+                file << "\n";
+
+                continue;
+            }
+
+            std::vector<std::string> items = helpers::explode('=', line);
+
+            if(type == "set")
+            {
+                if(items.at(0) == key)
+                {
+                    items[1] = val;
+                }
+
+                file << items.at(0) << "=" << items.at(1) << "\n";
+            }
+            else if(type == "remove")
+            {
+                if(items.at(0) == key)
+                    file << "";
+                else
+                    file << items.at(0) << "=" << items.at(1) << "\n";
+            }
+
+        }
+
+        close();
+    }
+}
+
 bool ConfigReader::open()
 {
     file.open(file_path, std::fstream::in | std::fstream::out | std::fstream::app);
@@ -82,48 +134,13 @@ void ConfigReader::add(std::string key, std::string value)
 
 void ConfigReader::set(std::string key, std::string val)
 {
-    if(exists(key))
-    {
-        open("in");
-        std::vector<std::string> lines;
-        std::string line;
-
-        while(std::getline(file, line))
-        {
-            lines.push_back(line);
-        }
-        close();
-
-        clear();
-
-        open("app");
-
-        for(std::string line : lines)
-        {
-            if(line == "")
-            {
-                file << "\n";
-
-                continue;
-            }
-
-            std::vector<std::string> items = helpers::explode('=', line);
-
-            if(items.at(0) == key)
-            {
-                items[1] = val;
-                std::cout << "setting" << std::endl;
-            }
-
-            file << items.at(0) << "=" << items.at(1) << "\n";
-        }
-
-        close();
-    }
+    update("set", key, val);
 }
 
 void ConfigReader::remove(std::string key)
-{ }
+{
+    update("remove", key, "");
+}
 
 void ConfigReader::clear()
 {

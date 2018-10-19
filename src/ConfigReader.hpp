@@ -9,6 +9,8 @@ private:
     std::string file_path;
     std::fstream file;
 
+    void update(std::string type, std::string key, std::string val);
+
 public:
     ConfigReader(std::string file_path);
     ~ConfigReader();
