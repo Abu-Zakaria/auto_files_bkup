@@ -1,1 +1,3 @@
 path=~/destination
+
+testing=it works
