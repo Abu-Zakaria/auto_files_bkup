@@ -1,6 +1,4 @@
+#define CATCH_CONFIG_MAIN
+#include <catch2/catch.hpp>
 #include <iostream>
-
-int main()
-{
-    return 0;
-}
+#include <string>
