@@ -15,6 +15,8 @@ public:
 
     bool open();
 
+    bool open(std::string type);
+
     void close();
 
     bool loaded();
@@ -28,4 +30,6 @@ public:
     void set(std::string key, std::string val);
 
     void remove(std::string key);
+
+    void clear();
 };

@@ -22,4 +22,6 @@ public:
     virtual void set(std::string key, std::string val) = 0;
 
     virtual void remove(std::string key) = 0;
+
+    virtual void clear() = 0;
 };
