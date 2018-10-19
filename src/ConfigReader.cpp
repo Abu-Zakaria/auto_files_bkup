@@ -3,12 +3,19 @@
 #include "helpers.hpp"
 #include <vector>
 
-ConfigReader::ConfigReader(std::string file_path)
-{
-    file.open(file_path, std::fstream::in | std::fstream::out | std::fstream::app);
-}
+ConfigReader::ConfigReader(std::string file_path) : file_path(file_path)
+{}
 
 ConfigReader::~ConfigReader()
+{}
+
+bool ConfigReader::open()
+{
+    file.open(file_path, std::fstream::in | std::fstream::out | std::fstream::app);
+    return file.is_open();
+}
+
+void ConfigReader::close()
 {
     file.close();
 }

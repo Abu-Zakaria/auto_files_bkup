@@ -7,6 +7,10 @@ public:
     Reader(){};
     virtual ~Reader(){};
 
+    virtual bool open() = 0;
+
+    virtual void close() = 0;
+
     virtual bool loaded() = 0;
 
     virtual bool exists(std::string key) = 0;

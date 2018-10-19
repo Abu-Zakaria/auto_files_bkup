@@ -6,11 +6,16 @@
 class ConfigReader : Reader
 {
 private:
+    std::string file_path;
     std::fstream file;
 
 public:
     ConfigReader(std::string file_path);
     ~ConfigReader();
+
+    bool open();
+
+    void close();
 
     bool loaded();
 
