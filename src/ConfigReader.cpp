@@ -5,7 +5,7 @@
 
 ConfigReader::ConfigReader(std::string file_path)
 {
-    file.open(file_path, std::fstream::in | std::fstream::out);
+    file.open(file_path, std::fstream::in | std::fstream::out | std::fstream::app);
 }
 
 ConfigReader::~ConfigReader()
@@ -38,7 +38,11 @@ std::string ConfigReader::get(std::string key)
 }
 
 void ConfigReader::add(std::string key, std::string value)
-{ }
+{
+    std::string line = "\n" + key + "=" + value;
+
+    file << line;
+}
 
 void ConfigReader::set(std::string key, std::string val)
 { }
