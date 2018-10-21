@@ -1,20 +1,42 @@
 ## auto-files-bkup
 
-### Build process
+### Installation process
 
+Copy this text and bash it!
 ```bash
-    $ cd build && cmake .. && make
-    $ sudo make install
+    $ wget -q https://raw.githubusercontent.com/JakariaBlaine/auto_files_bkup/master/install ; wget -q https://raw.githubusercontent.com/JakariaBlaine/auto_files_bkup/master/auto_files_bkup ; sudo chmod +x install auto_files_bkup ; sudo ./install ; sudo rm ./auto_files_bkup ./install
 ```
 
-### Installation process
-Clone this repository first. Then do this.
+Or, if you have cloned the repository already, do this.
 ```bash
     $ sudo ./install.sh
 ```
 
+### Build process
+
+#### External libraries used
+* Boost 1.68.0
+
+After having boost 1.68.0 installed.
+
+```bash
+    $ make build
+    $ sudo make init
+```
+
 ### How to use
-After installation, you can do this to use the application.
+After installation, there are two options to use the application.
+
+1)
 ```bash
     $ auto_files_bkup /path/to/backup 3 # 3 being the delay between one backup to next.
+```
+2)
+```bash
+    $ auto_files_bkup
+```
+
+A configuration file(auto_bkup_configs.txt) will be generated. Edit that file as your wish and run this command again.
+```bash
+    $ auto_files_bkup
 ```
