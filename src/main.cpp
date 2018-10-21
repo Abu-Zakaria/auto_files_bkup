@@ -1,10 +1,7 @@
 #include <iostream>
-#include <boost/filesystem/path.hpp>
-#include <boost/filesystem/operations.hpp>
 #include "helpers.hpp"
 #include "Transfer.hpp"
 #include "ConfigReader.hpp"
-#include <regex>
 
 int main(int argc, char* argv[])
 {
