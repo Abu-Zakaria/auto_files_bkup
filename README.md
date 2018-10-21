@@ -1,4 +1,4 @@
-## auto-files-bkup
+## auto_files_bkup
 
 ### Installation process
 
