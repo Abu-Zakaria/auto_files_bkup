@@ -21,17 +21,17 @@ After having boost 1.68.0 installed.
 
 ```bash
     $ make build
-    $ sudo make init
+    $ sudo make init # optional - to install the compiled executable file (./build/auto_files_bkup)
 ```
 
 ### How to use
 After installation, there are two options to use the application.
 
-1)
+Quick command:
 ```bash
     $ auto_files_bkup /path/to/backup 3 # 3 being the delay between one backup to next.
 ```
-2)
+Extended usage:
 ```bash
     $ auto_files_bkup
 ```
