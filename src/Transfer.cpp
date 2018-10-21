@@ -4,7 +4,6 @@
 #include <boost/filesystem.hpp>
 #include "helpers.hpp"
 #include <thread>
-#include <time.h>
 
 Transfer::Transfer(std::string current_dir): current_dir(current_dir)
 { }
