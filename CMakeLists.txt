@@ -14,11 +14,11 @@ set(SOURCE_FILES
 
 include_directories(include)
 
-set(BOOST_STATIC_LIBS libboost_system.a libboost_filesystem.a)
-link_directories(lib/boost/lib)
+set(Boost_USE_STATIC_LIBS ON)
+find_package(Boost 1.68.0 COMPONENTS system filesystem REQUIRED)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
-target_link_libraries(${PROJECT_NAME} ${BOOST_STATIC_LIBS})
+target_link_libraries(${PROJECT_NAME} Boost::system Boost::filesystem)
 
 install(TARGETS ${PROJECT_NAME} DESTINATION /usr/bin)
