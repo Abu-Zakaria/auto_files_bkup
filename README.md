@@ -27,11 +27,11 @@ After having boost 1.68.0 installed.
 ### How to use
 After installation, there are two options to use the application.
 
-Quick command:
+#### Quick command:
 ```bash
     $ auto_files_bkup /path/to/backup 3 # 3 being the delay between one backup to next.
 ```
-Extended usage:
+#### Extended usage:
 ```bash
     $ auto_files_bkup
 ```
