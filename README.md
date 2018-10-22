@@ -9,7 +9,7 @@ Copy this text and bash it!
 
 Or, if you have cloned the repository already, do this.
 ```bash
-    $ sudo ./install.sh
+    $ sudo ./install
 ```
 
 ### Build process
