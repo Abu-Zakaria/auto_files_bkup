@@ -115,16 +115,7 @@ namespace helpers
         catch(fs::filesystem_error const & e)
         {
             const char * error_message = "boost::filesystem::create_directory: No such file or directory:";
-            if(strcmp(e.what(), error_message))
-            {
-                printl("+--------------------------------------------------------------------------------------------+");
-                printl("| The destination path doesn't exists. Edit your configuration file. (auto_bkup_configs.txt) |");
-                printl("+--------------------------------------------------------------------------------------------+");
-            }
-            else
-            {
-                std::cerr << e.what() << '\n';
-            }
+            std::cerr << e.what() << '\n';
 
             return false;
         }

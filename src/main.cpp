@@ -21,6 +21,7 @@ int main(int argc, char* argv[])
 
             return 0;
         }
+        config.close();
 
         helpers::printl("+----------------------------------------------------------+");
         helpers::printl("| Using ./auto_bkup_configs.txt file for configuration...  |");
@@ -35,17 +36,27 @@ int main(int argc, char* argv[])
                 helpers::printl("+--------------------------------------------+");
                 helpers::printl("| failed: The configuration file is invalid! |");
                 helpers::printl("+--------------------------------------------+");
+
+                return 0;
             }
         }
         catch(std::exception& e)
         {
             const char* stoi_error = "stoi";
+            std::cout << "asdsd" << std::endl;
 
             if(strcmp(e.what(), stoi_error) == 0)
             {
                 helpers::printl("");
                 helpers::printl("+------------------------------------------------------------------------+");
                 helpers::printl("| failed: Provide an integer value at 'delay' key in configuration file! |");
+                helpers::printl("+------------------------------------------------------------------------+");
+            }
+            else
+            {
+                helpers::printl("");
+                helpers::printl("+------------------------------------------------------------------------+");
+                helpers::printl(e.what());
                 helpers::printl("+------------------------------------------------------------------------+");
             }
 
@@ -127,6 +138,21 @@ int main(int argc, char* argv[])
     boost::filesystem::path full_path(boost::filesystem::current_path());
 
     std::string path = full_path.string();
+
+    std::vector<std::string> target_path_elements = helpers::explode('/', target_dir);
+    target_path_elements.pop_back();
+    std::string where_to_backup = helpers::implode('/', target_path_elements);
+
+    boost::filesystem::path where_to_backup_path(where_to_backup);
+
+    if(!boost::filesystem::exists(where_to_backup_path))
+    {
+        helpers::printl("+--------------------------------------------------------------------------------------------+");
+        helpers::printl("| The destination path doesn't exists. Edit your configuration file. (auto_bkup_configs.txt) |");
+        helpers::printl("+--------------------------------------------------------------------------------------------+");
+
+        return 0;
+    }
 
     Transfer transfer(path);
 
