@@ -9,17 +9,15 @@ int main(int argc, char* argv[])
     {
         ConfigReader config("./auto_bkup_configs.txt");
 
-        if(!config.exists("path") || !config.exists("delay"))
-        {
-            if(!config.exists("path"))
-                config.add("path", "~/your/destination");
-            if(!config.exists("delay"))
-                config.add("delay", "MINUTE");
+        config.open();
 
-            helpers::printl("+-----------------------------------------------------------------------+");
-            helpers::printl("| Created a configuration file for auto backup! (auto_bkup_configs.txt) |");
-            helpers::printl("| Edit that file and run the command again for auto backups             |");
-            helpers::printl("+-----------------------------------------------------------------------+");
+        if(!config.loaded())
+        {
+            helpers::printl("+----------------------------------------------------------+");
+            helpers::printl("| No configuration file found for backup!                  |");
+            helpers::printl("| Run the command again with --gen or -g flag to           |");
+            helpers::printl("| generate a configuration file.                           |");
+            helpers::printl("+----------------------------------------------------------+");
 
             return 0;
         }
@@ -58,6 +56,25 @@ int main(int argc, char* argv[])
 
     if(argc == 2)
     {
+        if(std::strcmp(*(argv + 1), "--gen") == 0 || std::strcmp(*(argv + 1), "-g") == 0)
+        {
+            ConfigReader config("./auto_bkup_configs.txt");
+
+            if(!config.exists("path") || !config.exists("delay"))
+            {
+                if(!config.exists("path"))
+                    config.add("path", "~/your/destination");
+                if(!config.exists("delay"))
+                    config.add("delay", "MINUTE");
+            }
+
+            helpers::printl("+--------------------------------------------------------------------------+");
+            helpers::printl("| Generated a configuration file for auto backup! (auto_bkup_configs.txt)  |");
+            helpers::printl("| Edit that file and run `auto_files_bkup` for auto backups.               |");
+            helpers::printl("+--------------------------------------------------------------------------+");
+
+            return 0;
+        }
         helpers::printl("");
 
         helpers::printl("+----------------------------------------------+");
