@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
     {
         ConfigReader config("./auto_bkup_configs.txt");
 
-        config.open();
+        config.open("in");
 
         if(!config.loaded())
         {
@@ -43,7 +43,6 @@ int main(int argc, char* argv[])
         catch(std::exception& e)
         {
             const char* stoi_error = "stoi";
-            std::cout << "asdsd" << std::endl;
 
             if(strcmp(e.what(), stoi_error) == 0)
             {
@@ -160,7 +159,36 @@ int main(int argc, char* argv[])
 
     transfer.setDelay(delay_time);
 
-    transfer.move();
+    helpers::printl("+-----------------------------------+");
+    helpers::printl("| Starting auto-backup...           |");
+    helpers::printl("| --------------------------------- |");
+    helpers::print("| Delay : " + std::to_string(transfer.getDelay()) + " minute(s)");
+
+    for(int i = 0; i < 16 - std::to_string(transfer.getDelay()).length(); i++)
+    {
+        helpers::print(" ");
+    }
+    helpers::print("|\n");
+    helpers::printl("+-----------------------------------+");
+
+    while(true)
+    {
+        try
+        {
+            transfer.move();
+        }
+        catch(const char * message)
+        {
+            helpers::printl("+---------+");
+            helpers::printl("| Failed! |");
+            helpers::printl("+---------+");
+
+            helpers::printl("");
+            helpers::printl(message);
+
+            break;
+        }
+    }
 
     return 0;
 }

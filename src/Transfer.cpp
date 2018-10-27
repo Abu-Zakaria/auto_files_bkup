@@ -27,51 +27,32 @@ void Transfer::setTargetDir(std::string path)
 
 void Transfer::move()
 {
-    helpers::printl("+-----------------------------------+");
-    helpers::printl("| Starting auto-backup...           |");
-    helpers::printl("| --------------------------------- |");
-    helpers::print("| Delay : " + std::to_string(getDelay()) + " minute(s)");
+    delete_dir(target_dir);
 
-    for(int i = 0; i < 16 - std::to_string(getDelay()).length(); i++)
+    boost::filesystem::path curr_dir(current_dir);
+
+    if(!helpers::copyDir(curr_dir, boost::filesystem::path(target_dir)))
     {
-        helpers::print(" ");
+        throw "OperationFailed! Something went wrong. Choose backup path correctly.";
     }
-    helpers::print("|\n");
-    helpers::printl("+-----------------------------------+");
 
-    while(true)
-    {
-        delete_dir(target_dir);
+    time_t rawtime;
+    struct tm * timeinfo;
+    char formatted_time[80];
 
-        boost::filesystem::path curr_dir(current_dir);
+    time(&rawtime);
 
-        if(!helpers::copyDir(curr_dir, boost::filesystem::path(target_dir)))
-        {
-            helpers::printl("+---------+");
-            helpers::printl("| Failed! |");
-            helpers::printl("+---------+");
+    timeinfo = localtime(&rawtime);
 
-            break;
-        }
+    strftime(formatted_time, 80, "%H:%M", timeinfo);
 
+    helpers::printl("");
+    std::cout << "\\|/ [" << formatted_time << "] - Backing up files to " << getTargetDir() << std::endl;
 
-        time_t rawtime;
-        struct tm * timeinfo;
-        char formatted_time[80];
-
-        time(&rawtime);
-
-        timeinfo = localtime(&rawtime);
-
-        strftime(formatted_time, 80, "%H:%M", timeinfo);
-
-        helpers::printl("");
-        std::cout << "\\|/ [" << formatted_time << "] - Backing up files to " << getTargetDir() << std::endl;
-
-        std::this_thread::sleep_for(std::chrono::minutes(delay));
-    }
+    std::this_thread::sleep_for(std::chrono::minutes(delay));
 }
 
+// TODO: use uintmax_t instead of int
 int Transfer::delete_dir(std::string dir_path)
 {
     boost::filesystem::path path = dir_path;
