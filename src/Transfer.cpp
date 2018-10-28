@@ -48,8 +48,7 @@ void Transfer::move()
 
     helpers::printl("");
     std::cout << "\\|/ [" << formatted_time << "] - Backing up files to " << getTargetDir() << std::endl;
-
-    std::this_thread::sleep_for(std::chrono::minutes(delay));
+    
 }
 
 // TODO: use uintmax_t instead of int

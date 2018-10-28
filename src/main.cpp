@@ -2,6 +2,7 @@
 #include "helpers.hpp"
 #include "Transfer.hpp"
 #include "ConfigReader.hpp"
+#include <thread>
 
 int main(int argc, char* argv[])
 {
@@ -176,6 +177,8 @@ int main(int argc, char* argv[])
         try
         {
             transfer.move();
+
+            std::this_thread::sleep_for(std::chrono::minutes(delay));
         }
         catch(const char * message)
         {
