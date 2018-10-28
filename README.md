@@ -33,7 +33,7 @@ After installation, there are two options to use the application.
 ```
 #### Extended usage:
 ```bash
-    $ auto_files_bkup
+    $ auto_files_bkup --gen
 ```
 
 A configuration file(auto_bkup_configs.txt) will be generated. Edit that file as your wish and run this command again.
